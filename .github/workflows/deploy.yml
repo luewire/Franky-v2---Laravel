@@ -1,0 +1,43 @@
+name: Deploy Laravel App
+
+on:
+  push:
+    branches:
+      - main  # Deploy ketika ada push ke branch "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout kode dari repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. Setup PHP (untuk Laravel)
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.1  # Versi PHP Anda
+        extensions: mbstring, pdo, bcmath
+        tools: composer
+
+    # 3. Install dependencies Laravel
+    - name: Install dependencies
+      run: composer install --no-dev --optimize-autoloader
+
+    # 4. Build Frontend (Tailwind/Node.js jika diperlukan)
+    - name: Install and Build Frontend
+      run: |
+        npm install
+        npm run build
+
+    # 5. Deployment (contoh: FTP)
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./  # Direktori yang akan diupload
+        server-dir: /public_html
