@@ -1,0 +1,20 @@
+/* User Modal Styling */
+#user-modal {
+    z-index: 1000; /* Ensure the modal is on top */
+    position: fixed;
+    inset: 0;
+    display: flex;
+    items-center;
+    justify-center;
+    background-color: rgba(0, 0, 0, 0.5); /* Slight transparency */
+}
+
+#user-modal .bg-.bg-[#1f1f1f] {
+    z-index: 1100; /* Ensure the content inside the modal appears on top */
+}
+
+/* Tab Content Styling */
+.tab-pane {
+    position: relative; /* Add this to allow z-index stacking context */
+    z-index: 1; /* Ensure the tab content stays below the modal */
+}

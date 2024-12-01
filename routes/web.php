@@ -1,45 +1,45 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
-use App\Models\Product;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+// Login routes
 Route::get('/', function () {
-    return view('login');
+    return view('login');  // Point to the Blade view where your login form is
+})->name('login');
+
+Route::get('/Home', function () {
+    return view('landingapp');  // Redirect to the dashboard or the page for authenticated users
 });
 
-Route::get('/Home', [ProductController::class, 'index']);
-
-Route::get('/blonded', function () {
-    return view('album.blonded');
+// Authenticated routes
+Route::middleware('auth')->group(function () {
+    Route::get('/Home', [HomeController::class, 'index']); // Dashboard utama
+    Route::get('/Home', [ProductController::class, 'index']); // Halaman produk
 });
 
-Route::get('/endless', function () {
-    return view('album.endless');
+// Static pages
+Route::view('/blonded', 'album.blonded');
+Route::view('/endless', 'album.endless');
+Route::view('/chanelorange', 'album.orange');
+Route::view('/video', 'plus.video');
+Route::view('/terms', 'footer.terms');
+Route::view('/help', 'footer.help');
+Route::view('/privacy', 'footer.privacy');
+
+// cart
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'showCart']); // Menampilkan keranjang belanja
+Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/cart/count', function () {
+    return response()->json(['count' => count(session('cart', []))]);
 });
 
-Route::get('/chanelorange', function () {
-    return view('album.orange');
-});
 
-Route::get('/video', function () {
-    return view('plus.video');
-});
 
-Route::get('/terms', function () {
-    return view('footer.terms');
-});
+//auth
+Auth::routes();  // Menambahkan semua route autentikasi termasuk logout
+

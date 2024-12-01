@@ -26,7 +26,7 @@
         </div>
 
         <!-- Back Link -->
-        <a href="/landingpage" class="text-white text-sm underline">
+        <a href="/Home" class="text-white text-sm underline">
             Back
         </a>
 
