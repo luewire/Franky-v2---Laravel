@@ -30,7 +30,8 @@ btnTombol.addEventListener("click", function () {
         localStorage.setItem("isLoggedIn", "true");
 
         // Redirect to the landing page
-        window.location.href = '/landingpage';
+        window.location.href = "{{ url('/landingpage') }}";
+
     } else {
         // Show an alert if username or password is incorrect
         alert("Username dan password anda salah. Silakan dicek kembali!!!");

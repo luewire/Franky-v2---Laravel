@@ -28,7 +28,7 @@
   Login
 </button>
         </form>
-        <a href='/landingpage' class="block mt-4 text-sm text-gray-400 hover:text-white transition duration-300 ease-in-out">continue without login</a>
+        <a href='/Home' class="block mt-4 text-sm text-gray-400 hover:text-white transition duration-300 ease-in-out">continue without login</a>
     </div>
 
     <script>
