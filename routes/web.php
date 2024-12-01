@@ -40,4 +40,6 @@ Route::get('/video', function () {
     return view('plus.video');
 });
 
-
+Route::get('/terms', function () {
+    return view('footer.terms');
+});
